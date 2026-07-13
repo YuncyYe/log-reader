@@ -26,7 +26,7 @@ import (
 	"github.com/bfenetworks/log-reader/reader_util"
 )
 
-type BfeReader struct {
+type BfeLogReader struct {
 	Config     *reader_conf.ReaderConfig // server config
 	logReaders []LogReader               // for read access log
 
@@ -41,19 +41,19 @@ type BfeReader struct {
 }
 
 /*
-create BfeReader
+create LogBfeReader
 param:
 
 	config:  the Base config
-	version: the version of bfeReader
+	version: the version of LogReader
 
 return:
 
-	(*BfeReader, error)
+	(*LogReader, error)
 */
-func NewBfeReader(config *reader_conf.ReaderConfig, version string) (*BfeReader, error) {
+func NewBfeLogReader(config *reader_conf.ReaderConfig, version string) (*BfeLogReader, error) {
 	// create BfeReader
-	br := new(BfeReader)
+	br := new(BfeLogReader)
 
 	// reader config
 	br.Config = config
@@ -94,7 +94,7 @@ func NewBfeReader(config *reader_conf.ReaderConfig, version string) (*BfeReader,
 }
 
 // new logReader
-func (br *BfeReader) newLogReader() error {
+func (br *BfeLogReader) newLogReader() error {
 	// create LogReader for bfe access log pb
 	pbConf := br.Config.PbAccessLogConf
 	if pbConf.LogFile != "" {
@@ -107,7 +107,7 @@ func (br *BfeReader) newLogReader() error {
 }
 
 // setup signal table
-func (br *BfeReader) InitSignalTable() {
+func (br *BfeLogReader) InitSignalTable() {
 	/* create signal table */
 	br.SignalTable = signal_table.NewSignalTable()
 
@@ -118,14 +118,14 @@ func (br *BfeReader) InitSignalTable() {
 	br.SignalTable.StartSignalHandle()
 }
 
-// start bfeReader
-func (br *BfeReader) Start(confRoot string) error {
+// start BfeLogReader
+func (br *BfeLogReader) Start(confRoot string) error {
 	// start all work modules
 	for mname, module := range reader_module.GetWorkModules() {
 		// init module first
 		err := module.Init(br.Config, br.WebHandlers, confRoot)
 		if err != nil {
-			log.Logger.Error("BfeReader failed to init module %s", mname)
+			log.Logger.Error("BfeLogReader failed to init module %s", mname)
 			return err
 		}
 
@@ -141,6 +141,6 @@ func (br *BfeReader) Start(confRoot string) error {
 }
 
 // set "SERVER_READY" to YES
-func (br *BfeReader) SetReady() {
+func (br *BfeLogReader) SetReady() {
 	br.srvState.Set("SERVER_READY", "YES")
 }

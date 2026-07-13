@@ -29,10 +29,10 @@ type ReaderConfig struct {
 }
 
 /*
-ReaderConfigLoad - load config for bfeReader
+ReaderConfigLoad - load config for logReader
 
 Params:
-  - filePath: path of bfeReader config file
+  - filePath: path of logReader config file
 
 Returns:
 

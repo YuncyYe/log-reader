@@ -81,7 +81,7 @@ func TestResolveFields_Default(t *testing.T) {
 		},
 	}
 	of := cfg.ResolveFields()
-	// default (40) + extra required (log_tag, client_ip) = 42
+	// default (48) = 48
 	expectedCount := len(DefaultFields())
 	if len(of.Set) != expectedCount {
 		t.Fatalf("expected %d fields, got %d", expectedCount, len(of.Set))

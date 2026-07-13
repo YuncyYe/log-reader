@@ -19,7 +19,7 @@ import (
 )
 
 // all monitor handlers
-func (srv *BfeReader) monitorHandlers() map[string]interface{} {
+func (srv *BfeLogReader) monitorHandlers() map[string]interface{} {
 	handlers := map[string]interface{}{
 		"bfe_reader":      srv.srvStateGet,     // for server state
 		"bfe_reader_diff": srv.srvStateDiffGet, // for server state diff
@@ -28,12 +28,12 @@ func (srv *BfeReader) monitorHandlers() map[string]interface{} {
 }
 
 // all reload handlers
-func (srv *BfeReader) reloadHandlers() map[string]interface{} {
+func (srv *BfeLogReader) reloadHandlers() map[string]interface{} {
 	handlers := map[string]interface{}{}
 	return handlers
 }
 
-func (srv *BfeReader) WebHandlersInit() error {
+func (srv *BfeLogReader) WebHandlersInit() error {
 	// register handlers for monitor
 	err := web_monitor.RegisterHandlers(srv.WebHandlers, web_monitor.WebHandleMonitor,
 		srv.monitorHandlers())

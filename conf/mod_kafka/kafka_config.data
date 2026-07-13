@@ -12,6 +12,7 @@ FieldMode = customized
 FieldNames= logid
 FieldNames= timestamp
 FieldNames= product
+FieldNames= hostid
 FieldNames= client_ip
 FieldNames= is_trust_src_ip
 FieldNames= err_code

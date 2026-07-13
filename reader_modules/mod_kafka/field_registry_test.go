@@ -81,15 +81,15 @@ func boolPtr(v bool) *bool       { return &v }
 
 func TestFieldRegistry_DefaultFieldsCount(t *testing.T) {
 	def := DefaultFields()
-	if len(def) != 47 {
-		t.Fatalf("expected 47 default fields, got %d: %v", len(def), def)
+	if len(def) != 48 {
+		t.Fatalf("expected 48 default fields, got %d: %v", len(def), def)
 	}
 }
 
 func TestFieldRegistry_RequiredFieldsCount(t *testing.T) {
 	req := RequiredFields()
-	if len(req) != 21 {
-		t.Fatalf("expected 21 required fields, got %d: %v", len(req), req)
+	if len(req) != 22 {
+		t.Fatalf("expected 22 required fields, got %d: %v", len(req), req)
 	}
 }
 
@@ -103,6 +103,9 @@ func TestFieldRegistry_AllFieldsCount(t *testing.T) {
 func TestFieldRegistry_IsValidField(t *testing.T) {
 	if !IsValidField("logid") {
 		t.Error("logid should be valid")
+	}
+	if !IsValidField("hostid") {
+		t.Error("hostid should be valid")
 	}
 	if !IsValidField("ai_apikey") {
 		t.Error("ai_apikey should be valid")
@@ -124,6 +127,7 @@ func TestFieldRegistry_Extract(t *testing.T) {
 	}{
 		{"logid", uint64(12345)},
 		{"timestamp", uint64(1782353290)},
+		{"hostid", "TODO"},
 		{"product", "BFE"},
 		{"log_tag", "req_BFE"},
 		{"client_ip", "10.0.0.1"},
@@ -155,6 +159,15 @@ func TestFieldRegistry_Extract(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			val, isZero := Extract(tt.name, log)
+			if tt.name == "hostid" {
+				if isZero {
+					t.Errorf("hostid should not be zero")
+				}
+				if _, ok := val.(string); !ok {
+					t.Errorf("hostid should be string, got %T", val)
+				}
+				return
+			}
 			if val != tt.expected {
 				t.Errorf("expected %v, got %v", tt.expected, val)
 			}

@@ -42,6 +42,7 @@ Output fields are controlled via `FieldMode` in `kafka_config.data`:
 | `timestamp` | uint64 | ✅ | ✅ | Request timestamp (Unix seconds) |
 | `product` | string | ✅ | ✅ | Product identifier, prefers `RequestLog.Product`, falls back to `BfeLog.Product` when empty |
 | `log_tag` | string | ❌ | ❌ | Log classification tag, used to distinguish normal/error logs |
+| `hostid` | string | ✅ | ✅ | log reader hostid (hostname_netns) |
 
 ### 3.2. Client Connection Fields
 

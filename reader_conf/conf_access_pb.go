@@ -21,7 +21,7 @@ import (
 
 type PbAccessLogConf struct {
 	LogFile         string   // the path of pb access log
-	Modules         []string // modules for bfeReader to load, format: "mod_name" or "mod_name:true" or "mod_name:false"
+	Modules         []string // modules for logReader to load, format: "mod_name" or "mod_name:true" or "mod_name:false"
 	MaxSizePerBatch int      // max element size per batch, <=0, unlimited
 
 	FinalModules []string

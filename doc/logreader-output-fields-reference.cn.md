@@ -42,6 +42,7 @@
 | `timestamp` | uint64 | ✅ | ✅ | 请求时间戳（Unix 秒） |
 | `product` | string | ✅ | ✅ | 产品标识，优先取 `RequestLog.Product`，为空时取 `BfeLog.Product` |
 | `log_tag` | string | ❌ | ❌ | 日志分类标签，用于区分正常/错误日志 |
+| `hostid` | string | ✅ | ✅ | log reader 的hostid(由 hostname_netns 组成) |
 
 ### 3.2. 客户端连接字段
 

@@ -35,14 +35,14 @@ var COUNTER_KEYS = []string{
 }
 
 // get srv.srvState
-func (br *BfeReader) srvStateGet(params map[string][]string) ([]byte, error) {
+func (br *BfeLogReader) srvStateGet(params map[string][]string) ([]byte, error) {
 	// get data for srvState
 	s := br.srvState.GetAll()
 	return s.FormatOutput(params) // TBD: wait for modification of golang-lib
 }
 
 // get srv.srvStateDiff
-func (br *BfeReader) srvStateDiffGet(params map[string][]string) ([]byte, error) {
+func (br *BfeLogReader) srvStateDiffGet(params map[string][]string) ([]byte, error) {
 	// get data for srvStateDiff
 	diff := br.srvStateDiff.Get()
 	return diff.FormatOutput(params) // TBD: wait for modification of golang-lib

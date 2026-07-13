@@ -107,36 +107,36 @@ func main() {
 	// register all modules
 	reader_modules.SetModules()
 
-	// 1. create BfeReader
-	bfeReader, err := bfe_log_reader.NewBfeReader(&config, "")
+	// 1. create bfeLogReader
+	bfeLogReader, err := bfe_log_reader.NewBfeLogReader(&config, "")
 	if err != nil {
-		log.Logger.Error("main():err in NewBfeReader():%s", err.Error())
+		log.Logger.Error("main():err in NewBfeLogReader():%s", err.Error())
 		Exit(1)
 	}
 
 	// setup signal table
-	bfeReader.InitSignalTable()
-	log.Logger.Info("main():bfeReader.InitSignalTable() OK")
+	bfeLogReader.InitSignalTable()
+	log.Logger.Info("main():logReader.InitSignalTable() OK")
 
-	// 2. register modules for bfeReader
-	err = bfeReader.RegisterModules(&config)
+	// 2. register modules for logReader
+	err = bfeLogReader.RegisterModules(&config)
 	if err != nil {
 		log.Logger.Error("main():err in RegisterModules():%s", err.Error())
 		Exit(1)
 	}
-	log.Logger.Info("main():bfeReader.RegisterModules() OK")
+	log.Logger.Info("main():logReader.RegisterModules() OK")
 
-	// 3. start bfeReader
-	if err = bfeReader.Start(*confRoot); err != nil {
-		log.Logger.Error("main():error in bfeReader.Start():%v", err)
+	// 3. start logReader
+	if err = bfeLogReader.Start(*confRoot); err != nil {
+		log.Logger.Error("main():error in logReader.Start():%v", err)
 		Exit(1)
 	}
 
 	// start embeded web server
-	go bfeReader.WebServer.Start()
+	go bfeLogReader.WebServer.Start()
 
 	// set "SERVER_READY" to YES
-	bfeReader.SetReady()
+	bfeLogReader.SetReady()
 
 	// Handle SIGINT and SIGTERM.
 	ch := make(chan os.Signal, 1)

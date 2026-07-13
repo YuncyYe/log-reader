@@ -31,7 +31,7 @@ func registerModules(rm *reader_module.ReaderModules, modules []string) {
 }
 
 // Register reader modules
-func (br *BfeReader) RegisterModules(config *reader_conf.ReaderConfig) error {
+func (br *BfeLogReader) RegisterModules(config *reader_conf.ReaderConfig) error {
 
 	for _, reader := range br.logReaders {
 		logReaderModules := reader_module.NewReaderModules()

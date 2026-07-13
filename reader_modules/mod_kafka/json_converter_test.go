@@ -48,6 +48,9 @@ func TestConvertBfeLogToJSON_DefaultFields(t *testing.T) {
 	if result["backend_info"] != "10.0.0.2:8080" {
 		t.Errorf("backend_info: expected 10.0.0.2:8080, got %v", result["backend_info"])
 	}
+	if hostid, ok := result["hostid"].(string); !ok || hostid == "" {
+		t.Errorf("hostid should be non-empty string, got %v", result["hostid"])
+	}
 }
 
 func TestConvertBfeLogToJSON_RequireFields(t *testing.T) {

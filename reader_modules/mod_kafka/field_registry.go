@@ -20,6 +20,7 @@ import (
 	"sync"
 
 	bfe_access_pb "github.com/bfenetworks/bfe-access-pb/bfe_access_pb"
+	"github.com/bfenetworks/log-reader/reader_util"
 )
 
 // FieldDef describes a JSON output field
@@ -207,6 +208,10 @@ func registerAllFields() {
 			}
 			return bfeLog.GetProduct().String()
 		},
+		isZeroString,
+	)
+	registerField("hostid", "string", true, true,
+		func(bfeLog *bfe_access_pb.BfeLog) interface{} { return reader_util.GetHostId() },
 		isZeroString,
 	)
 	registerField("log_tag", "string", false, false,
