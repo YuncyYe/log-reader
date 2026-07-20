@@ -32,8 +32,8 @@ func writeTempFile(t *testing.T, content string) string {
 
 func TestLoadKafkaDataConfig_FileNotExist(t *testing.T) {
 	cfg, err := LoadKafkaDataConfig("/nonexistent/path/kafka_config.data")
-	if err != nil {
-		t.Fatalf("expected nil error for nonexistent file, got %v", err)
+	if err == nil {
+		t.Fatalf("expected error for nonexistent file")
 	}
 	if cfg != nil {
 		t.Fatal("expected nil config for nonexistent file")
