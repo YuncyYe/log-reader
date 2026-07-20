@@ -101,14 +101,19 @@ func (m *ModuleKafka) Init(conf *reader_conf.ReaderConfig, whs *web_monitor.WebH
 	m.outputFields = DefaultOutputFields()
 	if m.conf.Basic.DataPath != "" {
 		dataPath := path.Join(path.Dir(confPath), m.conf.Basic.DataPath)
+		log.Logger.Debug("%s.Init(): m.conf.Basic.DataPath:%s", m.name, dataPath)
+
 		dataCfg, err := LoadKafkaDataConfig(dataPath)
 		if err != nil {
 			log.Logger.Warn("%s.Init(): LoadKafkaDataConfig(%s): %v, using default fields", m.name, dataPath, err)
+			return fmt.Errorf("%s.Init(): LoadKafkaDataConfig() error: %s", m.name, err.Error())
 		} else if dataCfg != nil {
 			m.outputFields = dataCfg.ResolveFields()
 			log.Logger.Info("%s.Init(): loaded field config from %s, mode=%s, fields=%d",
 				m.name, dataPath, dataCfg.ConfFields.FieldMode, len(m.outputFields.Set))
 		}
+	} else {
+		log.Logger.Info("%s.Init(): m.conf.Basic.DataPath is empty", m.name)
 	}
 
 	m.producer, err = NewKafkaProducer(&m.state, m.conf)

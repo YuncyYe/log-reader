@@ -41,7 +41,7 @@ type OutputFields struct {
 // LoadKafkaDataConfig loads kafka_config.data, returns nil if file does not exist
 func LoadKafkaDataConfig(filePath string) (*KafkaDataConfig, error) {
 	if _, err := os.Stat(filePath); errors.Is(err, os.ErrNotExist) {
-		return nil, nil
+		return nil, err
 	}
 
 	var cfg KafkaDataConfig
